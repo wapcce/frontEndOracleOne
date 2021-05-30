@@ -6,7 +6,9 @@ $(document).ready(function() {
   inicializaContadores();
   inicializaCronometro();
   $("#botao-reiniciar").click(reiniciaJogo);
+  inicializaMarcadores();
   noPasteDrop();
+
 
 });
 
@@ -33,7 +35,7 @@ function inicializaContadores() {
     var conteudo = campo.val();//val() é o mesmo value
     var qtdPalavra = conteudo.split(/\S+/).length -1;
     //expressão regular que busca
-    console.log(qtdPalavra);
+    //console.log(qtdPalavra);
   //qualquer tipo de espaço vazio
     $("#contador-palavras").text(qtdPalavra);
 
@@ -58,12 +60,32 @@ function inicializaCronometro() {
         campo.attr("disabled" ,true); //muda o atributo do campo
         clearInterval(cronometroID);//cronometroID é o id da setInterval toda setInterval retorna seu ID
         $("#botao-reiniciar").attr("disabled", false);
+        campo.toggleClass("campo-desativado"); //se tiver classe ele tira se não faz o inverso
       }
     },1000);
+
 
   });
 
 }
+
+function inicializaMarcadores() {
+  var frase = $(".frase").text();
+  campo.on("input",function () {
+    var digitado = campo.val();
+    var comparavel = frase.substr(0,digitado.length);
+    if(digitado == comparavel) {
+    campo.addClass("borda-verde");
+    campo.removeClass("borda-vermelha");
+} else {
+    campo.addClass("borda-vermelha");
+    campo.removeClass("borda-verde");
+}
+
+  });
+
+}
+
 
 /*$("#botao-reiniciar").on("click",function () {
 
@@ -79,5 +101,7 @@ function reiniciaJogo() {
   $("#contador-caracteres").text("0");
   $("#tempo-digitacao").text(tempoInicial);
   inicializaCronometro();
-
+  campo.removeClass("campo-desativado");
+  campo.removeClass("borda-vermelha");
+  campo.removeClass("borda-verde");
 }
