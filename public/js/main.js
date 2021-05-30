@@ -54,13 +54,14 @@ function inicializaCronometro() {
   campo.one("focus",function() { //one funciona somente uma vez
     var cronometroID = setInterval(function () {
       tempoRestante--;
+      $("#botao-reiniciar").addClass("nao-visivel");
       $("#botao-reiniciar").attr("disabled",true);
       $("#tempo-digitacao").text(tempoRestante);
       if (tempoRestante < 1) {
-        campo.attr("disabled" ,true); //muda o atributo do campo
-        clearInterval(cronometroID);//cronometroID é o id da setInterval toda setInterval retorna seu ID
+        $("#botao-reiniciar").removeClass("nao-visivel");
         $("#botao-reiniciar").attr("disabled", false);
-        campo.toggleClass("campo-desativado"); //se tiver classe ele tira se não faz o inverso
+        clearInterval(cronometroID);//cronometroID é o id da setInterval toda setInterval retorna seu ID
+        finalizaJogo();
       }
     },1000);
 
@@ -69,22 +70,30 @@ function inicializaCronometro() {
 
 }
 
+function finalizaJogo() {
+
+  campo.attr("disabled" ,true); //muda o atributo do campo
+  campo.toggleClass("campo-desativado"); //se tiver classe ele tira se não faz o inverso
+  inserePlacar();
+}
+
 function inicializaMarcadores() {
   var frase = $(".frase").text();
   campo.on("input",function () {
     var digitado = campo.val();
     var comparavel = frase.substr(0,digitado.length);
     if(digitado == comparavel) {
-    campo.addClass("borda-verde");
-    campo.removeClass("borda-vermelha");
-} else {
-    campo.addClass("borda-vermelha");
-    campo.removeClass("borda-verde");
-}
+      campo.addClass("borda-verde");
+      campo.removeClass("borda-vermelha");
+    }else {
+      campo.addClass("borda-vermelha");
+      campo.removeClass("borda-verde");
+    }
 
   });
 
 }
+
 
 
 /*$("#botao-reiniciar").on("click",function () {

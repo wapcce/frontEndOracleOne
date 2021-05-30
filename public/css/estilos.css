@@ -22,3 +22,7 @@
 .icones{
   vertical-align: middle;
 }
+
+.nao-visivel {
+  visibility: hidden;
+}
