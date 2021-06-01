@@ -26,3 +26,9 @@
 .nao-visivel {
   visibility: hidden;
 }
+.placar{
+  display: none;
+}
+body{
+  overflow: scroll;
+}
