@@ -1,4 +1,5 @@
 $("#botao-frase").click(fraseAleatoria);
+$("#botao-frase-id").click(buscaFrase);
 
 function fraseAleatoria() {
   $("#spinner").show();
@@ -21,5 +22,29 @@ function trocaFraseAleatoria(data) {
   frase.text(data[numeroAleatorio].texto);
   atualizaTamanhoFrase();
   atualizaTempoInicial(data[numeroAleatorio].tempo);
+  
 
+}
+function buscaFrase() {
+  var fraseId = $("#frase-id").val();
+  var dados = { id: fraseId};
+  $.get("http://localhost:3000/frases",dados,trocaFrase)
+  .fail(function() {
+    $("#erro").show();
+    setTimeout(function() {
+      $("#erro").toggle();
+    },2000);
+  })
+  .always(function() {
+    $("#spinner").toggle();
+  });
+
+  //passa como segundo, o objeto que quer no caso foi passado o id
+}
+
+function trocaFrase(data) {
+  var frase =$(".frase");
+  frase.text(data.texto)
+  atualizaTamanhoFrase();
+  atualizaTempoInicial(data.tempo);
 }
