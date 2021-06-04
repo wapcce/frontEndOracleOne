@@ -8,7 +8,7 @@ $(document).ready(function() {
   $("#botao-reiniciar").click(reiniciaJogo);
   inicializaMarcadores();
   noPasteDrop();
-
+  atualizaPlacar()
 
 });
 
