@@ -26,6 +26,7 @@ function trocaFraseAleatoria(data) {
 
 }
 function buscaFrase() {
+  $("#spinner").show();
   var fraseId = $("#frase-id").val();
   var dados = { id: fraseId};
   $.get("http://localhost:3000/frases",dados,trocaFrase)

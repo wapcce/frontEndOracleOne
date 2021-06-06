@@ -3,7 +3,7 @@ $("#botao-sync").click(sincronizarPlacar);
 
 function inserePlacar() {
   var corpoTabela = $(".placar").find("tbody"); //Busca um tbody dentro de placar
-  var usuario = "Douglas";
+  var usuario = $("#usuarios").val();
   var numPalavras = $("#contador-palavras").text();
 
   var linha = novaLinha(usuario,numPalavras);
@@ -85,9 +85,15 @@ function sincronizarPlacar() {
   console.log(dados);
   $.post("http://localhost:3000/placar",dados,function() {
     console.log("Dados injetados");
-  });
+    $(".tooltip").tooltipster("open");
+  }).fail(function () {
+    $(".tooltip").tooltipster("open").tooltipster("content", "Falha ao sincronizar");
+  }).always(function(){
+    setTimeout(function() {
+    $(".tooltip").tooltipster("close"); //sempre feche o tooltipster
+}, 1200);
+});
 }
-
 
 function atualizaPlacar() {
   $.get("http://localhost:3000/placar",function (data) {
